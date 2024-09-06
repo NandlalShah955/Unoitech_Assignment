@@ -1,101 +1,86 @@
-import React,{useState,useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import "../App.css";
-import * as ScrappedService from "../services/DataScrapService/DataScrapService"
-import { useDispatch } from 'react-redux';
+import * as ScrappedService from "../services/DataScrapService/DataScrapService";
+import { useDispatch } from "react-redux";
 import InputComponent from "../components/InputComponent";
 import { Table, Pagination } from "antd";
 
 function Homepage() {
   const dispatch = useDispatch();
   const [inputText, setInputText] = useState("");
+  const [Scrappeddata, setScrappeddata] = useState([]);
   useEffect(() => {
     dispatch(ScrappedService.getScrapedData())
-    .then((response) => {
-console.log(response,"response");
-    })
-    .catch((err) => {
-      console.log({ err });
-    });
-  
-    
-  }, [])
-  
-  const companyData = [
-    // Example data structure. You can fetch real data from your backend or scraping function.
-    {
-      key: "1",
-      company: {
-        name: "Airbnb",
-        logo: "https://logo-url", // Replace with actual image URL
-      },
-      socialProfiles: {
-        facebook: "#",
-        twitter: "#",
-        linkedin: "#",
-      },
-      description:
-        "Modernize workflows with Zoom’s trusted collaboration tools...",
-      address: "San Francisco, United States",
-      phone: "573-467-7494",
-      email: "contact@airbnb.com",
-    },
-    // Add more company entries here...
-  ];
+      .then((response) => {
+        setScrappeddata(response.data);
+      })
+      .catch((err) => {
+        console.log({ err });
+      });
+  }, []);
 
   const columns = [
     {
-      title: "Company",
-      dataIndex: "company",
-      render: (company) => (
-        <div className="company">
-          <img src={company.logo} alt={company.name} className="company-logo" />
-          {company.name}
-        </div>
-      ),
-    },
-    {
-      title: "Social Profiles",
-      dataIndex: "socialProfiles",
-      render: (socialProfiles) => (
-        <div className="social-icons">
-          <a href={socialProfiles.facebook}>
-            <i className="fab fa-facebook"></i>
-          </a>
-          <a href={socialProfiles.twitter}>
-            <i className="fab fa-twitter"></i>
-          </a>
-          <a href={socialProfiles.linkedin}>
-            <i className="fab fa-linkedin"></i>
-          </a>
-        </div>
-      ),
+      title: "Name",
+      dataIndex: "name",
+      key: "name",
     },
     {
       title: "Description",
       dataIndex: "description",
+      key: "description",
+    },
+    {
+      title: "Logo",
+      dataIndex: "logoUrl",
+      key: "logoUrl",
+      render: (text) => <img src={text} alt="logo" width={100} />,
+    },
+    {
+      title: "FaceBook Url",
+      dataIndex: "facebookUrl",
+      key: "facebookUrl",
+    },
+    {
+      title: "Linkedin Url",
+      dataIndex: "linkedinUrl",
+      key: "linkedinUrl",
+    },
+    {
+      title: "Twitter Url",
+      dataIndex: "twitterUrl",
+      key: "twitterUrl",
+    },
+    {
+      title: "Instagram Url",
+      dataIndex: "instagramUrl",
+      key: "instagramUrl",
     },
     {
       title: "Address",
       dataIndex: "address",
+      key: "address",
     },
     {
-      title: "Phone No.",
-      dataIndex: "phone",
+      title: "Phone Number",
+      dataIndex: "phoneNumber",
+      key: "phoneNumber",
     },
     {
       title: "Email",
       dataIndex: "email",
-      render: (email) => <a href={`mailto:${email}`}>{email}</a>,
+      key: "email",
     },
   ];
   return (
     <div className="app-container">
       {/* Search and Button */}
-      <InputComponent inputText={inputText} setInputText={setInputText}/>
+      <InputComponent inputText={inputText} setInputText={setInputText} />
       {/* Table */}
       <Table
+       rowKey="_id"
         columns={columns}
-        dataSource={companyData}
+        dataSource={Scrappeddata}
         pagination={false} // We handle pagination separately
       />
 
