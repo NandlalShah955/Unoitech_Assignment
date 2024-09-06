@@ -19,10 +19,13 @@ function Homepage() {
   const [inputText, setInputText] = useState("");
   const [Scrappeddata, setScrappeddata] = useState([]);
   const [selectedRowKeys, setSelectedRowKeys] = useState([]);
+  const [isloading, setisloading] = useState(false);
   useEffect(() => {
+    setisloading(true);
     dispatch(ScrappedService.getScrapedData())
       .then((response) => {
         setScrappeddata(response.data);
+        setisloading(false);
       })
       .catch((err) => {
         console.log({ err });
@@ -156,17 +159,23 @@ function Homepage() {
       phoneNumber: item.phoneNumber,
       email: item.email,
     }));
-
+  if(data){
     const fileName = "ScrappedDataCsv";
     const exportType = exportFromJSON.types.csv;
     exportFromJSON({ data, fileName, exportType });
+    
+  }else{
+    Swal.fire({
+      title: "Please Add Url to Export data to CSV",
+      icon: "info",
+    });
+  }
   };
   // Function for handling Delete of particualar row using checkbox 
   const handledeleteData = () => {
-    console.log("selectedRowKeys", selectedRowKeys);
     dispatch(ScrappedService.deleteScrappedData(selectedRowKeys))
     .then((response) => {
-      // setScrappeddata(response.data);
+      setScrappeddata(response.data);
     })
     .catch((err) => {
       console.log({ err });
@@ -175,7 +184,7 @@ function Homepage() {
   return (
     <div className="app-container">
       {/* Search and Button */}
-      <InputComponent inputText={inputText} setInputText={setInputText} />
+      <InputComponent inputText={inputText} setInputText={setInputText} setScrappeddata={setScrappeddata} setisloading={setisloading} />
       {/* Table */}
       <Button onClick={exporttoCSV}>Export to CSV</Button>
       <Button onClick={handledeleteData}>Delete</Button>
@@ -188,6 +197,7 @@ function Homepage() {
           onClick: () => handleRowClick(record),
         })}
         scroll={{ x: "100%" }}
+        loading={isloading}
       />
 
       {/* Pagination */}

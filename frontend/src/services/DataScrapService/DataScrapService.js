@@ -43,11 +43,11 @@ export const getSingleScrappedData = (id) => {
         })
 }
 
+// Deleting MultipleScrappedData 
 export const deleteScrappedData=(idArray)=>{
-    console.log('idArray', idArray);
     return () =>
         new Promise((resolve, reject) => {
-            Http.get(Backend_Url + `/delete/webscrap`, idArray)
+            Http.post(Backend_Url + `/delete/webscrap`, {idArray:idArray})
                 .then((res) => {
                     return resolve(res.data);
                 })
