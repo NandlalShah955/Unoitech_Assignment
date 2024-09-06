@@ -42,3 +42,17 @@ export const getSingleScrappedData = (id) => {
                 })
         })
 }
+
+export const deleteScrappedData=(idArray)=>{
+    console.log('idArray', idArray);
+    return () =>
+        new Promise((resolve, reject) => {
+            Http.get(Backend_Url + `/delete/webscrap`, idArray)
+                .then((res) => {
+                    return resolve(res.data);
+                })
+                .catch((err) => {
+                    return reject(err)
+                })
+        })
+}

@@ -162,10 +162,15 @@ function Homepage() {
     exportFromJSON({ data, fileName, exportType });
   };
   // Function for handling Delete of particualar row using checkbox 
-  const handledeleteData = (id) => {
-    console.log("id", id);
+  const handledeleteData = () => {
     console.log("selectedRowKeys", selectedRowKeys);
-
+    dispatch(ScrappedService.deleteScrappedData(selectedRowKeys))
+    .then((response) => {
+      // setScrappeddata(response.data);
+    })
+    .catch((err) => {
+      console.log({ err });
+    });
   };
   return (
     <div className="app-container">
