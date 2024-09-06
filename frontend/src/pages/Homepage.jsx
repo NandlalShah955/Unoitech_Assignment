@@ -5,7 +5,7 @@ import * as ScrappedService from "../services/DataScrapService/DataScrapService"
 import { useDispatch } from "react-redux";
 import InputComponent from "../components/InputComponent";
 import { Table, Pagination, Button } from "antd";
-import exportFromJSON from 'export-from-json'
+import exportFromJSON from "export-from-json";
 import {
   LinkedinOutlined,
   FacebookOutlined,
@@ -18,6 +18,7 @@ function Homepage() {
   const navigate = useNavigate();
   const [inputText, setInputText] = useState("");
   const [Scrappeddata, setScrappeddata] = useState([]);
+  const [selectedRowKeys, setSelectedRowKeys] = useState([]);
   useEffect(() => {
     dispatch(ScrappedService.getScrapedData())
       .then((response) => {
@@ -29,6 +30,24 @@ function Homepage() {
   }, []);
 
   const columns = [
+    {
+      title: "Select",
+      dataIndex: "select",
+      key: "select",
+      render: (_, record) => (
+        <input
+          type="checkbox"
+          checked={selectedRowKeys.includes(record._id)}
+          onChange={() => {
+            const newSelectedRowKeys = selectedRowKeys.includes(record._id)
+              ? selectedRowKeys.filter((key) => key !== record._id) // Uncheck
+              : [...selectedRowKeys, record._id]; // Check
+            setSelectedRowKeys(newSelectedRowKeys);
+          }}
+          onClick={(e) => e.stopPropagation()}
+        />
+      ),
+    },
     {
       title: "Company",
       dataIndex: "name",
@@ -122,9 +141,9 @@ function Homepage() {
       state: { productId: record._id },
     });
   };
-  console.log('Scrappeddata', Scrappeddata)
+  // Function for exporting Data into CSV 
   const exporttoCSV = () => {
-    const data = Scrappeddata.map(item => ({
+    const data = Scrappeddata.map((item) => ({
       _id: item._id,
       name: item.name,
       description: item.description,
@@ -136,11 +155,17 @@ function Homepage() {
       address: item.address,
       phoneNumber: item.phoneNumber,
       email: item.email,
-  }));
-  
+    }));
+
     const fileName = "ScrappedDataCsv";
     const exportType = exportFromJSON.types.csv;
-    exportFromJSON({ data, fileName, exportType })
+    exportFromJSON({ data, fileName, exportType });
+  };
+  // Function for handling Delete of particualar row using checkbox 
+  const handledeleteData = (id) => {
+    console.log("id", id);
+    console.log("selectedRowKeys", selectedRowKeys);
+
   };
   return (
     <div className="app-container">
@@ -148,6 +173,7 @@ function Homepage() {
       <InputComponent inputText={inputText} setInputText={setInputText} />
       {/* Table */}
       <Button onClick={exporttoCSV}>Export to CSV</Button>
+      <Button onClick={handledeleteData}>Delete</Button>
       <Table
         rowKey="_id"
         columns={columns}

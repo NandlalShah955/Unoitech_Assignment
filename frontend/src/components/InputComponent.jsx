@@ -31,6 +31,7 @@ function InputComponent({ inputText, setInputText }) {
         title: message,
         icon: "success",
     });
+    window.location.reload();
       })
       .catch((err) => {
         let message = err.response.data.message;
