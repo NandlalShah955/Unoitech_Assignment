@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import * as ScrappedService from "../services/DataScrapService/DataScrapService";
 import { useDispatch } from "react-redux";
 import InputComponent from "../components/InputComponent";
-import { Table, Pagination, Button } from "antd";
+import { Table, Pagination, Button,Typography } from "antd";
 import exportFromJSON from "export-from-json";
 import {
   LinkedinOutlined,
@@ -16,10 +16,12 @@ import {
 function Homepage() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { Title } = Typography;
   const [inputText, setInputText] = useState("");
   const [Scrappeddata, setScrappeddata] = useState([]);
   const [selectedRowKeys, setSelectedRowKeys] = useState([]);
   const [isloading, setisloading] = useState(false);
+  const [count, setcount] = useState(0)
   useEffect(() => {
     setisloading(true);
     dispatch(ScrappedService.getScrapedData())
@@ -46,6 +48,7 @@ function Homepage() {
               ? selectedRowKeys.filter((key) => key !== record._id) // Uncheck
               : [...selectedRowKeys, record._id]; // Check
             setSelectedRowKeys(newSelectedRowKeys);
+            setcount(newSelectedRowKeys.length);
           }}
           onClick={(e) => e.stopPropagation()}
         />
@@ -186,6 +189,7 @@ function Homepage() {
       {/* Search and Button */}
       <InputComponent inputText={inputText} setInputText={setInputText} setScrappeddata={setScrappeddata} setisloading={setisloading} />
       {/* Table */}
+      <Title level={5}>{count}</Title>
       <Button onClick={exporttoCSV}>Export to CSV</Button>
       <Button onClick={handledeleteData}>Delete</Button>
       <Table
