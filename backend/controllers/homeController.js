@@ -121,5 +121,32 @@ class HomeController {
             res.status(500).send({ status: "failed", message: "There is some error while getting the data", error: error });
         }
     }
+    static deleteScrappedData = async (req, res) => {
+        try {
+            const { idArray } = req.body;
+            // Validate the input to make sure idArray exists and is an array
+            if (!idArray || !Array.isArray(idArray)) {
+                return res.status(400).json({
+                    status: 'failed',
+                    message: 'Invalid input. idArray must be a valid array of IDs.',
+                });
+            }
+            //   Use deleteMany with $in to delete all documents at once
+            const result = await HomeDataModel.deleteMany({ _id: { $in: idArray } });
+          
+            // Check if documents were deleted
+            if (result.deletedCount === 0) {
+                return res.status(404).json({
+                    status: 'failed',
+                    message: 'No matching records found to delete.',
+                });
+            }
+            const updatedScrappedData = await HomeDataModel.find()
+            res.status(200).json({ status: 'success', message: 'Data deleted successfully', data: updatedScrappedData });
+        } catch (error) {
+            console.error(error);
+            res.status(500).send({ status: "failed", message: "There is some error while getting the data", error: error });
+        }
+    };
 };
 export default HomeController;
