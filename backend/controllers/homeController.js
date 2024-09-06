@@ -53,18 +53,6 @@ class HomeController {
                     }
                 });
 
-                let data = {
-                    name,
-                    description,
-                    logoUrl,
-                    facebookUrl,
-                    linkedinUrl,
-                    twitterUrl,
-                    instagramUrl,
-                    address,
-                    phoneNumber,
-                    email,
-                }
                 const doc = new HomeDataModel({
                     name: name,
                     description: description,
@@ -79,10 +67,11 @@ class HomeController {
                     url: url
                 });
                 await doc.save();
+                const updatedScrappedData = await HomeDataModel.find()
                 res.status(200).send({
                     status: "success",
                     message: "Data Scrapped Successfully",
-                    data: data,
+                    data: updatedScrappedData,
                 });
             }
         } catch (error) {
