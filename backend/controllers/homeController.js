@@ -3,6 +3,7 @@ import * as cheerio from 'cheerio';
 import axios from "axios";
 
 class HomeController {
+    // Function for Posting the Scrapped Data in Database  
     static webScrapping = async (req, res) => {
         try {
               const {url}=req.body; 
@@ -59,19 +60,19 @@ class HomeController {
                 phoneNumber,
                 email
             }
-            // const doc = new HomeDataModel({
-            //     name:name,
-            //     description:description,
-            //     logoUrl:logoUrl,
-            //     facebookUrl:facebookUrl,
-            //     linkedinUrl:linkedinUrl,
-            //     twitterUrl:twitterUrl,
-            //     instagramUrl:instagramUrl,
-            //     address:address,
-            //     phoneNumber:phoneNumber,
-            //     email:email
-            //   });
-            //   await doc.save();
+            const doc = new HomeDataModel({
+                name:name,
+                description:description,
+                logoUrl:logoUrl,
+                facebookUrl:facebookUrl,
+                linkedinUrl:linkedinUrl,
+                twitterUrl:twitterUrl,
+                instagramUrl:instagramUrl,
+                address:address,
+                phoneNumber:phoneNumber,
+                email:email
+              });
+              await doc.save();
             res.send({
                 status: "success",
                 message: "Data Scrapped Successfully",
@@ -79,9 +80,40 @@ class HomeController {
             });
         } catch (error) {
             console.log(error)
-            res.status(500).send({ status: "failed", message: "There is some error while Scraping the data" });
+            res.status(500).send({ status: "failed", message: "There is some error while Scraping the data",error:error });
         }
 
+    }
+
+    // Function for getting all the ScappedData 
+    static getScappedData = async (req,res)=>{
+        try {
+             const Scappeddata=await HomeDataModel.find();
+            res.send({
+                status: "success",
+                message: "Fetched Scrapped Data Successfully",
+                data: Scappeddata,
+            });
+        } catch (error) {
+            console.log(error,"error");
+            res.status(500).send({ status: "failed", message: "There is some error while getting the data",error:error });
+        }
+    }
+        // Function for getting a single ScappedData 
+    static getSingleScrappedData= async(req,res)=>{
+        try {
+            const {id}=req.body;
+            const data=await HomeDataModel.findById(id);
+            console.log(data); 
+            res.send({
+                status: "success",
+                message: "Fetched Scrapped Data Successfully",
+                data: Scappeddata,
+            });
+        } catch (error) {
+            console.log(error,"error");
+            res.status(500).send({ status: "failed", message: "There is some error while getting the data",error:error });
+        }
     }
 };
 export default HomeController;
