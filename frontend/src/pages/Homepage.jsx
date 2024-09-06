@@ -4,7 +4,14 @@ import { useNavigate } from "react-router-dom";
 import * as ScrappedService from "../services/DataScrapService/DataScrapService";
 import { useDispatch } from "react-redux";
 import InputComponent from "../components/InputComponent";
-import { Table, Pagination } from "antd";
+import { Table, Pagination, Button } from "antd";
+import exportFromJSON from 'export-from-json'
+import {
+  LinkedinOutlined,
+  FacebookOutlined,
+  TwitterOutlined,
+  InstagramOutlined,
+} from "@ant-design/icons"; // Ant Design Icons
 
 function Homepage() {
   const dispatch = useDispatch();
@@ -23,14 +30,16 @@ function Homepage() {
 
   const columns = [
     {
-      title: "Name",
+      title: "Company",
       dataIndex: "name",
       key: "name",
+      // ellipsis: true,
     },
     {
       title: "Description",
       dataIndex: "description",
       key: "description",
+      // ellipsis: true,
     },
     {
       title: "Logo",
@@ -39,25 +48,58 @@ function Homepage() {
       render: (text) => <img src={text} alt="logo" width={100} />,
     },
     {
-      title: "FaceBook Url",
-      dataIndex: "facebookUrl",
-      key: "facebookUrl",
+      title: "Social Media",
+      key: "socialMedia",
+      render: (record) => (
+        <div>
+          {record.facebookUrl && (
+            <a
+              href={record.facebookUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <FacebookOutlined
+                style={{ fontSize: "24px", marginRight: "10px" }}
+              />
+            </a>
+          )}
+          {record.linkedinUrl && (
+            <a
+              href={record.linkedinUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <LinkedinOutlined
+                style={{ fontSize: "24px", marginRight: "10px" }}
+              />
+            </a>
+          )}
+          {record.twitterUrl && (
+            <a
+              href={record.twitterUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <TwitterOutlined
+                style={{ fontSize: "24px", marginRight: "10px" }}
+              />
+            </a>
+          )}
+          {record.instagramUrl && (
+            <a
+              href={record.instagramUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <InstagramOutlined
+                style={{ fontSize: "24px", marginRight: "10px" }}
+              />
+            </a>
+          )}
+        </div>
+      ),
     },
-    {
-      title: "Linkedin Url",
-      dataIndex: "linkedinUrl",
-      key: "linkedinUrl",
-    },
-    {
-      title: "Twitter Url",
-      dataIndex: "twitterUrl",
-      key: "twitterUrl",
-    },
-    {
-      title: "Instagram Url",
-      dataIndex: "instagramUrl",
-      key: "instagramUrl",
-    },
+
     {
       title: "Address",
       dataIndex: "address",
@@ -74,25 +116,47 @@ function Homepage() {
       key: "email",
     },
   ];
-  const handleRowClick=(record)=>{
-    console.log(record,"record");
+  const handleRowClick = (record) => {
+    console.log(record, "record");
     navigate("/details", {
       state: { productId: record._id },
     });
-  }
+  };
+  console.log('Scrappeddata', Scrappeddata)
+  const exporttoCSV = () => {
+    const data = Scrappeddata.map(item => ({
+      _id: item._id,
+      name: item.name,
+      description: item.description,
+      logoUrl: item.logoUrl,
+      facebookUrl: item.facebookUrl,
+      linkedinUrl: item.linkedinUrl,
+      twitterUrl: item.twitterUrl,
+      instagramUrl: item.instagramUrl,
+      address: item.address,
+      phoneNumber: item.phoneNumber,
+      email: item.email,
+  }));
+  
+    const fileName = "ScrappedDataCsv";
+    const exportType = exportFromJSON.types.csv;
+    exportFromJSON({ data, fileName, exportType })
+  };
   return (
     <div className="app-container">
       {/* Search and Button */}
       <InputComponent inputText={inputText} setInputText={setInputText} />
       {/* Table */}
+      <Button onClick={exporttoCSV}>Export to CSV</Button>
       <Table
-       rowKey="_id"
+        rowKey="_id"
         columns={columns}
         dataSource={Scrappeddata}
         pagination={false} // We handle pagination separately
         onRow={(record) => ({
           onClick: () => handleRowClick(record),
         })}
+        scroll={{ x: "100%" }}
       />
 
       {/* Pagination */}

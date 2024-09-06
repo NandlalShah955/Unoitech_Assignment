@@ -1,7 +1,7 @@
 import Http from '../../Http';
 import { Backend_Url } from '../../helper';
-// Scrapping data from the URL 
 
+// Scrapping data from the URL 
 export const ScrapDatafromURL = (url) => {
     return (dispatch) =>
         new Promise((resolve, reject) => {
