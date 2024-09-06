@@ -10,6 +10,7 @@ const homeDataSchema = new mongoose.Schema({
     address: { type: String },
     phoneNumber: { type: String },
     email: { type: String },
+    url:{type:String,required:true},
 
 }, {
     timestamps: true,

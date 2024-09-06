@@ -1,7 +1,6 @@
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
-
 import connectdb from './config/connectdb.js';
 import homeRoutes from "./routes/homeRoute.js";
 dotenv.config(); //Note You will not be needed Dotenv package if you are using latest 20 version of Nodejs;
