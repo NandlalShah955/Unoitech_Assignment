@@ -1,10 +1,16 @@
-import Homepage from "./pages/Homepage.jsx";
+import { BrowserRouter } from "react-router-dom";
+import { Provider } from "react-redux";
+import AppRoute from "./routes/Route";
 import "./App.css";
 
 function App() {
   return (
     <>
-      <Homepage />
+      <Provider store={store}>
+        <BrowserRouter>
+          <AppRoute />
+        </BrowserRouter>
+      </Provider>
     </>
   );
 }

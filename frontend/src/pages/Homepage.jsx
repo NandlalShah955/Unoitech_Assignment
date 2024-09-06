@@ -1,10 +1,25 @@
-import React,{useState} from "react";
+import React,{useState,useEffect} from "react";
 import "../App.css";
+import * as ScrappedService from "../services/DataScrapService/DataScrapService"
+import { useDispatch } from 'react-redux';
 import InputComponent from "../components/InputComponent";
 import { Table, Pagination } from "antd";
 
 function Homepage() {
+  const dispatch = useDispatch();
   const [inputText, setInputText] = useState("");
+  useEffect(() => {
+    dispatch(ScrappedService.getScrapedData())
+    .then((response) => {
+console.log(response,"response");
+    })
+    .catch((err) => {
+      console.log({ err });
+    });
+  
+    
+  }, [])
+  
   const companyData = [
     // Example data structure. You can fetch real data from your backend or scraping function.
     {
