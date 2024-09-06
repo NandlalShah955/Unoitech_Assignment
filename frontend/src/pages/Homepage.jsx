@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "../App.css";
+import { useNavigate } from "react-router-dom";
 import * as ScrappedService from "../services/DataScrapService/DataScrapService";
 import { useDispatch } from "react-redux";
 import InputComponent from "../components/InputComponent";
@@ -7,6 +8,7 @@ import { Table, Pagination } from "antd";
 
 function Homepage() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [inputText, setInputText] = useState("");
   const [Scrappeddata, setScrappeddata] = useState([]);
   useEffect(() => {
@@ -72,6 +74,12 @@ function Homepage() {
       key: "email",
     },
   ];
+  const handleRowClick=(record)=>{
+    console.log(record,"record");
+    navigate("/details", {
+      state: { productId: record._id },
+    });
+  }
   return (
     <div className="app-container">
       {/* Search and Button */}
@@ -82,6 +90,9 @@ function Homepage() {
         columns={columns}
         dataSource={Scrappeddata}
         pagination={false} // We handle pagination separately
+        onRow={(record) => ({
+          onClick: () => handleRowClick(record),
+        })}
       />
 
       {/* Pagination */}
