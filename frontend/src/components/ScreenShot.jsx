@@ -1,10 +1,10 @@
 import React from "react";
 import "../App.css";
-function ScreenShotSection() {
+function ScreenShotSection({data}) {
   return (
     <div className="screenshot-section">
       <img
-        src="https://aniballoons.com/uploads/product_images/medium/43521696399143.webp"
+        src={data.logoUrl}
         alt="Screenshot of webpage"
       />
     </div>

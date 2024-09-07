@@ -30,7 +30,7 @@ function Details() {
       <div className="flexDiv">
         <CompanyDetails data={Scrappeddata} />
 
-        <ScreenshotSection />
+        <ScreenshotSection data={Scrappeddata}/>
       </div>
     </div>
   );
