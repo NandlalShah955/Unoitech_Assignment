@@ -1,19 +1,20 @@
 import React from 'react'
 import "../App.css";
-function CompanyInfo({ name, description, phone, email }) {
+function CompanyInfo({info}) {
+  console.log(info,"info")
   return (
 
   <>
    <div className="netflix-card-container">
       <div className="netflix-logo-section">
-        <img src="https://i.pinimg.com/736x/1b/54/ef/1b54efef3720f6ac39647fc420d4a6f9.jpg" alt="Netflix" className="netflix-logo" />
+        <img src={info.logoUrl} alt="Netflix" className="netflix-logo" />
       </div>
       <div className="netflix-details-section">
-        <h2 className="company-name">Netflix</h2>
+        <h2 className="company-name">{info.name}</h2>
         <div className="company-description">
           <span className="description-icon">ℹ️</span>
           <span className="description-text">
-            Watch Netflix movies & TV shows online or stream right to your smart TV, game console, PC, Mac, mobile, tablet, and more.
+           {info.description}
           </span>
         </div>
       </div>
@@ -21,13 +22,13 @@ function CompanyInfo({ name, description, phone, email }) {
         <div className="contact-info">
           <span className="contact-icon">📞</span>
           <span className="contact-text">Phone</span>
-          <span className="contact-value">(573)-456-4644</span>
+          <span className="contact-value">{info.phoneNumber}</span>
         </div>
         <div className="contact-info">
           <span className="contact-icon">✉️</span>
           <span className="contact-text">Email</span>
           <span className="contact-value">
-            <a href="mailto:contact@netflix.com">contact@netflix.com</a>
+            <a href="mailto:contact@netflix.com">{info.email}</a>
           </span>
         </div>
       </div>
