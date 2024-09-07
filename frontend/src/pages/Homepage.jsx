@@ -54,26 +54,22 @@ function Homepage() {
       ),
     },
     {
-      title: "Company",
-      dataIndex: "name",
-      key: "name",
-      // ellipsis: true,
-    },
-    {
-      title: "Description",
-      dataIndex: "description",
-      key: "description",
-      // ellipsis: true,
-    },
-    {
-      title: "Logo",
+      title: "LOGO",
       dataIndex: "logoUrl",
       key: "logoUrl",
-      render: (text) => <img src={text} alt="logo" width={100} />,
+      render: (text) => <img src={text} alt="logo" height={25} width={25} />,
     },
     {
-      title: "Social Media",
+      title: "COMPANY",
+      dataIndex: "name",
+      key: "name",
+      className:'uniqueColor'
+      // ellipsis: true,
+    },
+    {
+      title: "SOCIAL MEDIA",
       key: "socialMedia",
+      className:"SocialMedia",
       render: (record) => (
         <div>
           {record.facebookUrl && (
@@ -83,7 +79,7 @@ function Homepage() {
               rel="noopener noreferrer"
             >
               <FacebookOutlined
-                style={{ fontSize: "24px", marginRight: "10px" }}
+                style={{ fontSize: "25px", marginRight: "10px" }}
               />
             </a>
           )}
@@ -123,22 +119,31 @@ function Homepage() {
         </div>
       ),
     },
-
+  
     {
-      title: "Address",
+      title: "DESCRIPTION",
+      dataIndex: "description",
+      key: "description",
+      // ellipsis: true,
+    },
+    {
+      title: "ADDRESS",
       dataIndex: "address",
       key: "address",
     },
     {
-      title: "Phone Number",
+      title: "PHONE NO.",
       dataIndex: "phoneNumber",
       key: "phoneNumber",
+       className:'uniqueColor'
     },
     {
-      title: "Email",
+      title: "EMAIL",
       dataIndex: "email",
       key: "email",
+       className:'uniqueColor'
     },
+
   ];
   const handleRowClick = (record) => {
     console.log(record, "record");

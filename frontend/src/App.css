@@ -131,6 +131,7 @@ gap: 8px;
 border-radius: 8px;
 border: 1px 0px 0px 0px;
 opacity: 0px;
+color: #6B7280;
 
 }
 
@@ -168,6 +169,11 @@ margin-top: 2px;
 .pagination-container {
   margin-top: 20px;
   text-align: center;
+}
+.pagination-container .ant-pagination-item{
+  color: #6C2BD9;
+  /* background-color: #6C2BD9; */
+
 }
 
 /* Responsive design */
@@ -324,4 +330,33 @@ h2 {
 .borderMain {
   border: 1px solid red;
   /* display: grid; */
+}
+.ant-table-cell{
+  color: #6B7280;
+}
+.ant-table-cell.uniqueColor{
+  color: #6C2BD9;
+ 
+
+}
+.ant-table-cell.SocialMedia{
+width: 171px;
+color:#6B7280 ;
+}
+.ant-table-cell.SocialMedia span{
+color:#ECECEC;
+
+
+}
+.ant-table-thead th .ant-table-cell{
+  color: #6B7280;
+  font-weight: bold; /* Optional: make the text bold */
+}
+table th{
+  color: #6B7280 !important;
+  font-weight: bold; /* Optional: make the text bold */
+}
+/* For mobile responsive  */
+@media (max-width: 767px) {
+
 }
