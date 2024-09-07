@@ -61,7 +61,7 @@ function InputComponent({
         value={inputText}
         onChange={(e) => setInputText(e.target.value)}
       />
-      <Button type="primary" className="fetch-btn" onClick={handleSearch}>
+      <Button  className="fetch-btn" onClick={handleSearch}>
         Fetch & Save Details
       </Button>
     </div>

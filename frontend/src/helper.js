@@ -3,6 +3,6 @@
 const Backend_Url =
   window.location.hostname === "localhost"
     ? "http://localhost:8000/api/"
-    : "https://app-fetch.plus1iq.com/fetch/";
+    : "https://backend-s40u.onrender.com/api/";
     
 export { Backend_Url};

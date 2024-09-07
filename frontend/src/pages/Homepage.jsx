@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import * as ScrappedService from "../services/DataScrapService/DataScrapService";
 import { useDispatch } from "react-redux";
 import InputComponent from "../components/InputComponent";
-import { Table, Pagination, Button,Typography } from "antd";
+import { Table, Pagination, Button, Typography } from "antd";
 import exportFromJSON from "export-from-json";
 import {
   LinkedinOutlined,
@@ -21,7 +21,7 @@ function Homepage() {
   const [Scrappeddata, setScrappeddata] = useState([]);
   const [selectedRowKeys, setSelectedRowKeys] = useState([]);
   const [isloading, setisloading] = useState(false);
-  const [count, setcount] = useState(0)
+  const [count, setcount] = useState(0);
   useEffect(() => {
     setisloading(true);
     dispatch(ScrappedService.getScrapedData())
@@ -36,7 +36,6 @@ function Homepage() {
 
   const columns = [
     {
-      title: "Select",
       dataIndex: "select",
       key: "select",
       render: (_, record) => (
@@ -147,7 +146,7 @@ function Homepage() {
       state: { productId: record._id },
     });
   };
-  // Function for exporting Data into CSV 
+  // Function for exporting Data into CSV
   const exporttoCSV = () => {
     const data = Scrappeddata.map((item) => ({
       _id: item._id,
@@ -162,37 +161,45 @@ function Homepage() {
       phoneNumber: item.phoneNumber,
       email: item.email,
     }));
-  if(data){
-    const fileName = "ScrappedDataCsv";
-    const exportType = exportFromJSON.types.csv;
-    exportFromJSON({ data, fileName, exportType });
-    
-  }else{
-    Swal.fire({
-      title: "Please Add Url to Export data to CSV",
-      icon: "info",
-    });
-  }
+    if (data) {
+      const fileName = "ScrappedDataCsv";
+      const exportType = exportFromJSON.types.csv;
+      exportFromJSON({ data, fileName, exportType });
+    } else {
+      Swal.fire({
+        title: "Please Add Url to Export data to CSV",
+        icon: "info",
+      });
+    }
   };
-  // Function for handling Delete of particualar row using checkbox 
+  // Function for handling Delete of particualar row using checkbox
   const handledeleteData = () => {
     dispatch(ScrappedService.deleteScrappedData(selectedRowKeys))
-    .then((response) => {
-      setScrappeddata(response.data);
-    })
-    .catch((err) => {
-      console.log({ err });
-    });
+      .then((response) => {
+        setScrappeddata(response.data);
+      })
+      .catch((err) => {
+        console.log({ err });
+      });
   };
   return (
     <div className="app-container">
       {/* Search and Button */}
-      <InputComponent inputText={inputText} setInputText={setInputText} setScrappeddata={setScrappeddata} setisloading={setisloading} />
+      <InputComponent
+        inputText={inputText}
+        setInputText={setInputText}
+        setScrappeddata={setScrappeddata}
+        setisloading={setisloading}
+      />
       {/* Table */}
-      <Title level={5}>{count} Selected</Title>
-      <Button onClick={exporttoCSV}>Export to CSV</Button>
-      <Button onClick={handledeleteData}>Delete</Button>
+      <div className="button-group">
+        <span className="selected-count">{count} Selected</span>
+        <Button onClick={handledeleteData}>Delete</Button>
+        <Button onClick={exporttoCSV}>Export to CSV</Button>
+      </div>
+      
       <Table
+      className="MainDatatable"
         rowKey="_id"
         columns={columns}
         dataSource={Scrappeddata}

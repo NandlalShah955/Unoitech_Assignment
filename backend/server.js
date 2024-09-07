@@ -6,7 +6,7 @@ import homeRoutes from "./routes/homeRoute.js";
 dotenv.config(); //Note You will not be needed Dotenv package if you are using latest 20 version of Nodejs;
 
 const app = express();
-const port = process.env.Port;
+const PORT = process.env.PORT;
 const DATABASE_URL = process.env.DATABASE_URL;
 
 // For using Cors 
@@ -23,6 +23,6 @@ app.get('/', (req, res) => {
 
 // ROute for Scappring Data 
 app.use('/api', homeRoutes);
-app.listen(port, () => {
-    console.log(`Server is Listening on Port ${port}`)
+app.listen(PORT, () => {
+    console.log(`Server is Listening on Port ${PORT}`)
 });

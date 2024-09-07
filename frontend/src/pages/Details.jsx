@@ -22,7 +22,7 @@ function Details() {
       });
   }, [productId]);
   return (
-    <div>
+    <div className='borderMain'>
        <InputComponent inputText={inputText} setInputText={setInputText}  />
        <CompanyInfo
        info={Scrappeddata}
@@ -30,10 +30,12 @@ function Details() {
       />
 
       {/* Company Details */}
+      <div className='flexDiv'>
+
       <CompanyDetails data={Scrappeddata}/>
 
-      {/* Screenshot Section */}
-      {/* <ScreenshotSection /> */}
+       <ScreenshotSection />
+      </div>
     </div>
   )
 }

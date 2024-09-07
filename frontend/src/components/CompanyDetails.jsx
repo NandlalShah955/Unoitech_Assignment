@@ -12,7 +12,6 @@ import {
 } from "react-icons/fa";
 
 function CompanyDetails({ data }) {
-  console.log("data", data);
   return (
     <div className="company-details-container">
       <h2>Company Details</h2>
