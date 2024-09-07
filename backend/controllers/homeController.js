@@ -33,11 +33,12 @@ class HomeController {
                 const linkedinUrl = $('a[href*="linkedin.com"]').attr('href') || '';
                 const twitterUrl = $('a[href*="twitter.com"]').attr('href') || '';
                 const instagramUrl = $('a[href*="instagram.com"]').attr('href') || '';
-               
+
                 let phoneNumber = '';
-                
+                let address = '';
+
                 // Regular expressions for more accurate matching
-                const phoneRegex = /(\+?\d{1,2}\s?)?(\(?\d{3}\)?[\s-]?\d{3}[\s-]?\d{4})/g; // US-based phone numbers
+                const phoneRegex = /(\+?\d{1,2}\s?)?(\(?\d{3}\)?[\s-]?\d{3}[\s-]?\d{4})/g;
                 const email = [];
                 $('a[href^="mailto:"]').each((index, element) => {
                     const extractedEmail = $(element).attr('href').replace('mailto:', '');
@@ -49,7 +50,7 @@ class HomeController {
                 $('p').each((index, element) => {
                     const text = $(element).text().toLowerCase();
                     console.log('text', text);
-                    // Detect phone numbers using the regular expression
+
                     const phoneMatch = text.match(phoneRegex);
                     if (phoneMatch) {
                         phoneNumber = phoneMatch[0]; // Taking the first phone number found
@@ -60,10 +61,19 @@ class HomeController {
                             email.push(potentialEmail);
                         }
                     }
+                    if (/\d+\s+[A-Za-z]+\s+\w+/.test(text)) {  // Example: "123 Main Street"
+                        address += text + ' ';
+                    }
+
+                    // Look for common address-related terms to improve accuracy
+                    if (text.match(/(road|street|ave|avenue|drive|lane|blvd|boulevard|city|state|postal|code|zip|district|town|nagar|marg)/i)) {
+                        address += text + ' ';
+                    }
 
                 });
+                address = address.trim();
                 const validatedEmail = email.find(validateEmail);
-                console.log('email', email, validatedEmail);
+                console.log('address', address);
 
                 // Additional logic: If specific attributes exist, they take priority
                 const attrPhoneNumber = $('[itemprop="telephone"]').text().trim() || $('[href^="tel:"]').attr('href')?.replace('tel:', '').trim();
@@ -79,7 +89,7 @@ class HomeController {
                     linkedinUrl: linkedinUrl,
                     twitterUrl: twitterUrl,
                     instagramUrl: instagramUrl,
-                    // address: address,
+                    address: address,
                     phoneNumber: phoneNumber,
                     email: validatedEmail,
                     url: url
@@ -143,7 +153,7 @@ class HomeController {
             }
             //   Use deleteMany with $in to delete all documents at once
             const result = await HomeDataModel.deleteMany({ _id: { $in: idArray } });
-          
+
             // Check if documents were deleted
             if (result.deletedCount === 0) {
                 return res.status(404).json({
