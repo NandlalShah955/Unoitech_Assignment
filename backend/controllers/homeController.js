@@ -49,7 +49,6 @@ class HomeController {
 
                 $('p').each((index, element) => {
                     const text = $(element).text().toLowerCase();
-                    console.log('text', text);
 
                     const phoneMatch = text.match(phoneRegex);
                     if (phoneMatch) {
@@ -73,7 +72,6 @@ class HomeController {
                 });
                 address = address.trim();
                 const validatedEmail = email.find(validateEmail);
-                console.log('address', address);
 
                 // Additional logic: If specific attributes exist, they take priority
                 const attrPhoneNumber = $('[itemprop="telephone"]').text().trim() || $('[href^="tel:"]').attr('href')?.replace('tel:', '').trim();
