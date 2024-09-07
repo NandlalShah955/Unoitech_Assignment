@@ -189,7 +189,7 @@ function Homepage() {
       {/* Search and Button */}
       <InputComponent inputText={inputText} setInputText={setInputText} setScrappeddata={setScrappeddata} setisloading={setisloading} />
       {/* Table */}
-      <Title level={5}>{count}</Title>
+      <Title level={5}>{count} Selected</Title>
       <Button onClick={exporttoCSV}>Export to CSV</Button>
       <Button onClick={handledeleteData}>Delete</Button>
       <Table

@@ -98,4 +98,152 @@
     text-align: left;
   }
 }
+/* .mainContainer{
+  border: 1px solid red;
+  height: auto;
+  display: flex;
+}
+.firstChild{
+  width: 35%;
+}
+.secondChild{
+  height: 65%;
+}
+.logoContainer{
+height: 200px;
+}
+.logoContainer img{
+  height: 200px;
+} */
+.company-details-container {
+  width: 300px;
+  padding: 20px;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  font-family: Arial, sans-serif;
+}
 
+h2 {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.detail-section {
+  margin-bottom: 15px;
+}
+
+.detail-title {
+  display: block;
+  font-weight: bold;
+  font-size: 14px;
+  color: #6b7280; /* Gray color */
+  margin-bottom: 5px;
+}
+
+.detail-content a {
+  color: #6366f1; /* Blue-ish link color */
+  text-decoration: none;
+}
+
+.detail-content a:hover {
+  text-decoration: underline;
+}
+
+.detail-content {
+  font-size: 14px;
+  color: #374151; /* Dark gray text */
+}
+
+.detail-content:last-child {
+  margin-bottom: 0;
+}
+
+
+
+
+.netflix-card-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  font-family: Arial, sans-serif;
+  width: 100%;
+}
+
+.logo-section {
+  flex-shrink: 0;
+}
+
+.netflix-logo {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.details-section {
+  flex-grow: 1;
+  padding: 0 20px;
+  text-align: center;
+}
+
+.company-name {
+  font-size: 24px;
+  font-weight: bold;
+  color: #374151;
+  margin-bottom: 5px;
+}
+
+.company-description {
+  font-size: 14px;
+  color: #6b7280;
+}
+
+.description-icon {
+  margin-right: 5px;
+  color: #4B5563;
+}
+
+.contact-section {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-end;
+}
+
+.contact-info {
+  display: flex;
+  align-items: center;
+  margin-bottom: 5px;
+}
+
+.contact-icon {
+  margin-right: 5px;
+  font-size: 18px;
+  color: #EF4444; /* Red for phone */
+}
+
+.contact-text {
+  font-weight: bold;
+  color: #6b7280;
+  margin-right: 5px;
+}
+
+.contact-value {
+  font-size: 14px;
+  color: #374151;
+}
+
+.contact-value a {
+  color: #6366f1; /* Blue for email link */
+  text-decoration: none;
+}
+
+.contact-value a:hover {
+  text-decoration: underline;
+}

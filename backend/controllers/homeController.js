@@ -1,12 +1,19 @@
 import HomeDataModel from "../models/homeModel.js";
 import * as cheerio from 'cheerio';
 import axios from "axios";
-
+import got from "got";
+import fs from "fs";
+import Urlbox from "urlbox";
+function validateEmail(email) {
+    const emailRegex = /\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b/;
+    return emailRegex.test(email);
+}
 class HomeController {
     // Function for Posting the Scrapped Data in Database  
     static webScrapping = async (req, res) => {
         try {
             const { url } = req.body;
+            // const urlbox = Urlbox("4XoE9c5Vm66JwceB", "e36aae4677904f5e8229b5f63d07d5fb");
             const UrlData = await HomeDataModel.findOne({ url: url });
             if (UrlData) {
                 res
@@ -26,32 +33,43 @@ class HomeController {
                 const linkedinUrl = $('a[href*="linkedin.com"]').attr('href') || '';
                 const twitterUrl = $('a[href*="twitter.com"]').attr('href') || '';
                 const instagramUrl = $('a[href*="instagram.com"]').attr('href') || '';
-                // const address = $('[itemprop="address"]').text().trim() || '';
-                // const phoneNumber = $('[itemprop="Call"]').text().trim() || '';
-                // const email = $('a[href^="mailto:"]').attr('href')?.replace('mailto:', '') || '';
-                let address = '';
+               
                 let phoneNumber = '';
-                let email = '';
-
-                // // Look for specific tags or attributes that may contain address, phone, or email
-                $('p').each((index, element) => {
-                    const text = $(element).text().toLowerCase();
-
-                    // Find address-like content (which often contains numbers, commas, and street names)
-                    if (text.includes('address') || text.match(/\d{3,}/)) {
-                        address += $(element).text().trim() + ' ';
-                    }
-
-                    // Find phone number by detecting patterns like "Phone" or matching number patterns
-                    if (text.includes('phone') || text.match(/\+?\d[\d\s()-]{7,}/)) {
-                        phoneNumber = $(element).text().replace('Phone:', '').trim();
-                    }
-
-                    // Find email using a common email format
-                    if (text.includes('mail') || $(element).html().includes('mailto')) {
-                        email = $(element).find('a[href^="mailto:"]').attr('href')?.replace('mailto:', '').trim() || $(element).text().replace('Mail:', '').trim();
+                
+                // Regular expressions for more accurate matching
+                const phoneRegex = /(\+?\d{1,2}\s?)?(\(?\d{3}\)?[\s-]?\d{3}[\s-]?\d{4})/g; // US-based phone numbers
+                const email = [];
+                $('a[href^="mailto:"]').each((index, element) => {
+                    const extractedEmail = $(element).attr('href').replace('mailto:', '');
+                    if (validateEmail(extractedEmail)) {
+                        email.push(extractedEmail);
                     }
                 });
+
+                $('p').each((index, element) => {
+                    const text = $(element).text().toLowerCase();
+                    console.log('text', text);
+                    // Detect phone numbers using the regular expression
+                    const phoneMatch = text.match(phoneRegex);
+                    if (phoneMatch) {
+                        phoneNumber = phoneMatch[0]; // Taking the first phone number found
+                    }
+                    if (text.includes('@') && (text.includes('.com') || text.includes('.net') || text.includes('.org'))) {
+                        const potentialEmail = text.split(' ').find(part => validateEmail(part));
+                        if (potentialEmail) {
+                            email.push(potentialEmail);
+                        }
+                    }
+
+                });
+                const validatedEmail = email.find(validateEmail);
+                console.log('email', email, validatedEmail);
+
+                // Additional logic: If specific attributes exist, they take priority
+                const attrPhoneNumber = $('[itemprop="telephone"]').text().trim() || $('[href^="tel:"]').attr('href')?.replace('tel:', '').trim();
+                if (attrPhoneNumber) {
+                    phoneNumber = attrPhoneNumber;
+                }
 
                 const doc = new HomeDataModel({
                     name: name,
@@ -61,9 +79,9 @@ class HomeController {
                     linkedinUrl: linkedinUrl,
                     twitterUrl: twitterUrl,
                     instagramUrl: instagramUrl,
-                    address: address,
+                    // address: address,
                     phoneNumber: phoneNumber,
-                    email: email,
+                    email: validatedEmail,
                     url: url
                 });
                 await doc.save();
@@ -94,7 +112,8 @@ class HomeController {
             console.log(error, "error");
             res.status(500).send({ status: "failed", message: "There is some error while getting the data", error: error });
         }
-    }
+    };
+
     // Function for getting a single ScappedData 
     static getSingleScrappedData = async (req, res) => {
         try {
@@ -109,7 +128,9 @@ class HomeController {
             console.log(error, "error");
             res.status(500).send({ status: "failed", message: "There is some error while getting the data", error: error });
         }
-    }
+    };
+
+    //  Function for deleting Scrapping Data
     static deleteScrappedData = async (req, res) => {
         try {
             const { idArray } = req.body;

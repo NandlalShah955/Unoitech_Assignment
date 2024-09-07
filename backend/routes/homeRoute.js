@@ -9,7 +9,7 @@ router
 
 //   Route for gettting a Single Scrapped data 
   router.route("/webscrap/:id")
-  .post(HomeController.getSingleScrappedData)
+  .get(HomeController.getSingleScrappedData)
 
   // ROute for deleting Multiple Data 
   router.route("/delete/webscrap").post(HomeController.deleteScrappedData);
