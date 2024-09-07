@@ -4,20 +4,7 @@
   padding: 2rem;
   text-align: center;
 }
-.screenshot-section {
-  width: 73%;
-  /* justify-content: end; */
-  border: 1px solid green;
-}
-.flexDiv {
-  border: 1px solid yellowgreen;
-  display: flex;
-}
 
-.screenshot-section img {
-  height: 100%;
-  width: 100%;
-}
 
 .button-group {
  display: flex;
@@ -356,7 +343,43 @@ table th{
   color: #6B7280 !important;
   font-weight: bold; /* Optional: make the text bold */
 }
+.screenshot-section {
+  width: 73%;
+  /* justify-content: end; */
+  border: 1px solid green;
+}
+.flexDiv {
+  border: 1px solid yellowgreen;
+  display: flex;
+}
+
+.screenshot-section img {
+  height: 100%;
+  width: 100%;
+}
 /* For mobile responsive  */
 @media (max-width: 767px) {
-
+  .netflix-card-container{
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .flexDiv {
+    /* border: 1px solid yellowgreen; */
+    display: flex;
+    flex-direction: column;
+  }
+  .company-details-container{
+    width: 90%;
+  }
+  .screenshot-section{
+   width: 100%;
+  }
+  .screenshot-section img {
+    height: 100%;
+    width: 100%;
+  }
+  .search-input{
+    width: 100%;
+  }
 }
