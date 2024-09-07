@@ -1,3 +1,6 @@
+* {
+  font-family: Arial, Helvetica, sans-serif;
+}
 #root {
   max-width: 1280px;
   margin: 0 auto;
@@ -5,44 +8,39 @@
   text-align: center;
 }
 
-
 .button-group {
- display: flex;
+  display: flex;
   align-items: center;
-  /*  padding: 10px;
-  width: 300px; */
   width: 336px;
-height:50px;
-padding: 10px 10px 10px 15px;
-gap: 10px;
-opacity: 0px;
-
+  height: 50px;
+  padding: 10px 10px 10px 15px;
+  gap: 10px;
+  opacity: 0px;
 }
 
 .selected-count {
   /* flex-grow: 1; */
   color: #5a5a5a; /* Grey color for the selected count text */
   font-size: 14px;
-/* font-size: 12px; */
-font-weight: 500;
-line-height: 20px;
-text-align: left;
-
+  /* font-size: 12px; */
+  font-weight: 500;
+  line-height: 20px;
+  text-align: left;
 }
 
 .action-btn {
   margin-left: 10px;
   padding: 8px 16px;
   font-size: 14px;
-  color: #6c757d; /* Light grey color for disabled state */
-  border: 1px solid #dcdcdc; /* Light border */
-  background-color: #f8f9fa; /* Light background */
+  color: #6c757d;
+  border: 1px solid #dcdcdc; 
+  background-color: #f8f9fa; 
   border-radius: 4px;
-  cursor: not-allowed; /* Cursor style for disabled button */
+  cursor: not-allowed;
 }
 
 .action-btn:disabled {
-  opacity: 0.6; /* Disabled state opacity */
+  opacity: 0.6; 
 }
 
 .delete-btn {
@@ -112,34 +110,30 @@ text-align: left;
 
 .search-input {
   width: 404px;
-height:42px;
-padding: 12px 16px 12px 16px;
-gap: 8px;
-border-radius: 8px;
-border: 1px 0px 0px 0px;
-opacity: 0px;
-color: #6B7280;
-
+  height: 42px;
+  padding: 12px 16px 12px 16px;
+  gap: 8px;
+  border-radius: 8px;
+  border: 1px 0px 0px 0px;
+  opacity: 0px;
+  color: #6b7280;
 }
 
 .fetch-btn {
   width: 25%;
-  background-color:  #EDE5FF;
-  color:  #6C2BD9;
-  width:  167px;
+  background-color: #ede5ff;
+  color: #6c2bd9;
+  width: 167px;
   height: 37px;
   padding: 10px 15px 10px 15px;
   gap: 8px;
   border-radius: 5px;
   opacity: 0px;
-font-size: 14px;
-font-weight: 500;
-line-height: 16.94px;
-text-align: center;
-margin-top: 2px;
-
-    
-
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 16.94px;
+  text-align: center;
+  margin-top: 2px;
 }
 
 .company-logo {
@@ -157,10 +151,9 @@ margin-top: 2px;
   margin-top: 20px;
   text-align: center;
 }
-.pagination-container .ant-pagination-item{
-  color: #6C2BD9;
+.pagination-container .ant-pagination-item {
+  color: #6c2bd9;
   /* background-color: #6C2BD9; */
-
 }
 
 /* Responsive design */
@@ -247,8 +240,8 @@ h2 {
 }
 
 .netflix-logo {
-  width: 80px;
-  height: 80px;
+  width: 100%;
+  height: 100%;
   border-radius: 50%;
   object-fit: cover;
 }
@@ -314,42 +307,32 @@ h2 {
 .contact-value a:hover {
   text-decoration: underline;
 }
-.borderMain {
-  border: 1px solid red;
-  /* display: grid; */
-}
-.ant-table-cell{
-  color: #6B7280;
-}
-.ant-table-cell.uniqueColor{
-  color: #6C2BD9;
- 
 
+.ant-table-cell {
+  color: #6b7280;
 }
-.ant-table-cell.SocialMedia{
-width: 171px;
-color:#6B7280 ;
+.ant-table-cell.uniqueColor {
+  color: #6c2bd9;
 }
-.ant-table-cell.SocialMedia span{
-color:#ECECEC;
-
-
+.ant-table-cell.SocialMedia {
+  width: 171px;
+  color: #6b7280;
 }
-.ant-table-thead th .ant-table-cell{
-  color: #6B7280;
+.ant-table-cell.SocialMedia span {
+  color: #ececec;
+}
+.ant-table-thead th .ant-table-cell {
+  color: #6b7280;
   font-weight: bold; /* Optional: make the text bold */
 }
-table th{
-  color: #6B7280 !important;
+table th {
+  color: #6b7280 !important;
   font-weight: bold; /* Optional: make the text bold */
 }
 .screenshot-section {
   width: 73%;
-  /* justify-content: end; */
-  border: 1px solid green;
 }
 .flexDiv {
-  border: 1px solid yellowgreen;
   display: flex;
 }
 
@@ -359,27 +342,27 @@ table th{
 }
 /* For mobile responsive  */
 @media (max-width: 767px) {
-  .netflix-card-container{
+  .netflix-card-container {
     display: flex;
     flex-direction: column;
   }
-  
+
   .flexDiv {
     /* border: 1px solid yellowgreen; */
     display: flex;
     flex-direction: column;
   }
-  .company-details-container{
+  .company-details-container {
     width: 90%;
   }
-  .screenshot-section{
-   width: 100%;
+  .screenshot-section {
+    width: 100%;
   }
   .screenshot-section img {
     height: 100%;
     width: 100%;
   }
-  .search-input{
+  .search-input {
     width: 100%;
   }
 }

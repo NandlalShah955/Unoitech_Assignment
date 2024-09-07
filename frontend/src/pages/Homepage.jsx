@@ -57,7 +57,7 @@ function Homepage() {
       title: "LOGO",
       dataIndex: "logoUrl",
       key: "logoUrl",
-      render: (text) => <img src={text} alt="logo" height={25} width={25} />,
+      render: (text) => <img src={text} alt="logo" height='100%' width='100%' />,
     },
     {
       title: "COMPANY",
